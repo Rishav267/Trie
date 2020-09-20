@@ -1,0 +1,60 @@
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        #self.position = -1
+        self.end = False
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+        #self.map = {}
+        
+    def insert(self,texts):
+        cur = self.root
+        
+        for ch in texts:
+            if ch not in cur.children:
+                cur.children[ch] = TrieNode()
+            cur = cur.children[ch]
+            #cur.position[ch] = index
+        cur.end = True
+        #return root
+        
+    '''
+    def indexret(self,word,node):
+        cur = self.root
+        
+        for i,j in node.head:
+            
+        
+    def helper(self):
+        return self.indexret(self.root)
+    '''
+    
+class Solution:
+    def indexPairs(self, text: str, words: List[str]) -> List[List[int]]:
+        if len(text) == 0 or words == None:
+            return []
+        
+        T = Trie()
+        length = len(text)
+        result = []
+        for c in words:
+            T.insert(c)
+        
+        for i in range(length):
+            j=i
+            node = T.root
+            while j<length and text[j] in node.children:
+                #print(text[j],j)
+                node = node.children[text[j]]
+                #print(node)
+                if node.end:
+                    #print(node.end)
+                    result.append([i,j])
+                    #print(result)
+                j+=1
+        return result
+        
+        
+        
