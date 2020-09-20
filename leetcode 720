@@ -1,0 +1,62 @@
+class TrieNode:
+    def __init__(self):
+        self.head = {}
+        self.end = False
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self,word):
+        temp = self.root
+        
+        for ch in word:
+            if ch not in temp.head:
+                temp.head[ch] = TrieNode()
+            temp = temp.head[ch]
+        temp.end = True
+        '''
+    def search(self,word):
+        temp = self.root
+        
+        for ch in word:
+            if temp.end:
+                continue
+            temp = temp.head[ch]
+            
+        return temp
+                
+    '''
+    def longest(self,node,temp_res):
+        #root = self.root
+        res = temp_res
+       # print(node.head.items())
+        for ch,child in node.head.items():
+            #print(child)
+            
+            if child.end:
+                cur = self.longest(child,temp_res + ch)
+                if (len(cur) >len(res)) or (len(cur)==len(res) and cur<res):
+                    res = cur
+                    
+        return res
+    
+    def helper(self):
+            return self.longest(self.root,'')
+                
+    
+class Solution:
+    def longestWord(self, words: List[str]) -> str:
+        if len(words) == 0:
+            return ""
+        
+        maxlength = 0
+        T = Trie()
+        for word in words:
+            T.insert(word)
+        
+        
+        return T.helper()
+        
+        
+        
