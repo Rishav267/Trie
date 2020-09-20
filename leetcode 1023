@@ -1,0 +1,50 @@
+
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.end = False
+    
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+        
+    def insert(self,word):
+        cur = self.root
+        
+        for ch in word:
+            if ch not in cur.children:
+                cur.children[ch] = TrieNode()
+            cur = cur.children[ch]
+        
+        cur.end = True
+        
+    def find(self,words):
+        cur = self.root
+        
+        for ele in words:
+            if ele not in cur.children and ele.isupper():
+                return False
+            elif ele in cur.children:
+                cur = cur.children[ele]            
+        return cur.end == True
+ 
+    
+class Solution:
+    def camelMatch(self, queries: List[str], pattern: str) -> List[bool]:
+        if len(queries) == 0 or len(pattern) == 0:
+            return False
+        
+        T = Trie()
+        
+        #for word in pattern:
+        T.insert(pattern)
+    
+        output = []
+        
+        for words in queries:
+            output.append(T.find(words))
+        
+        return output
+       
+            
+        
