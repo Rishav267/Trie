@@ -1,0 +1,55 @@
+class Trie:
+    def __init__(self):
+        self.head = {}
+        self.value =0
+        self.EOF = False
+        
+class MapSum:
+
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.root = Trie()
+        self.Sum =0
+        self.map = {}
+
+    def insert(self, key: str, val: int) -> None:
+        delta = val - self.map.get(key,0)
+        #print(self.map.get(key,0))
+        self.map[key] = val
+        #print(self.map)
+        
+        curr = self.root
+        curr.value +=delta
+        #print(curr.value)
+        
+        for ch in key:
+            if ch not in curr.head:
+                curr.head[ch] = Trie()
+            curr = curr.head[ch]
+            #print(curr,curr.head)
+            print(curr.head)
+            curr.value += delta  #check in debug,for second input app,2 curr.value is 5 till l of apple, why?
+            #print(curr.value)
+            #print(curr)
+        curr.EOF = True
+        #curr.value = val
+        
+
+    def sum(self, prefix: str) -> int:
+        curr = self.root
+        #print(curr)
+        for ch in prefix:
+            if ch not in curr.head:
+                return 0
+            curr = curr.head[ch]
+            #print(curr,curr.value)
+        
+        return curr.value
+
+
+# Your MapSum object will be instantiated and called as such:
+# obj = MapSum()
+# obj.insert(key,val)
+# param_2 = obj.sum(prefix)
